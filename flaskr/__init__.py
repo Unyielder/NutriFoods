@@ -1,3 +1,4 @@
+"""
 import os
 from flask import Flask
 
@@ -32,4 +33,4 @@ def create_app(test_config=None):
     from flaskr.controllers import home
     app.register_blueprint(home.bp)
 
-    return app
+    return app"""
