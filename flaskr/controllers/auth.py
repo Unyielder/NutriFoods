@@ -2,6 +2,7 @@ import functools
 from flask import Blueprint, flash, g, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from flaskr.db import get_db
+from flaskr.app import Base
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -19,16 +20,20 @@ def register():
         elif not password:
             error = 'Password is required.'
         elif db.execute(
-            'SELECT id FROM Users WHERE Username = ?', (username,)
+            'SELECT id FROM USERS WHERE Username = ?', (username,)
         ).fetchone() is not None:
             error = f'User {username} is already registered.'
 
         if error is None:
-            db.execute(
-                'INSERT INTO Users (Username, Password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
-            )
-            db.commit()
+            user = Base.classes.USERS(username, password)
+            session.add(user)
+            session.commit()
+
+            #db.execute(
+             #   'INSERT INTO USERS (UserName, PassWord) VALUES (?, ?)',
+            #    (username, generate_password_hash(password))
+          #  )
+           # db.commit()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -44,7 +49,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM Users WHERE Username = ?', (username,)
+            'SELECT * FROM USERS WHERE UserName = ?', (username,)
         ).fetchone()
 
         if user is None:
@@ -69,7 +74,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM Users WHERE id = ?', (user_id,)).fetchone()
+            'SELECT * FROM USERS WHERE id = ?', (user_id,)).fetchone()
 
 
 @bp.route('/logout')
