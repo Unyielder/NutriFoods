@@ -11,9 +11,9 @@
   <div >
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
-      {% if g.user %}
+      {% if session['user_id'] %}
       <li class="nav-item active">
-        <a class="nav-link" href="#">{{ g.user['username'] }}<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#">{{ session['user'] }}<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
