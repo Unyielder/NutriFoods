@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-4">
-            <form action="{{ url_for('home.serving') }}" method="post">
+            <form method="post">
                 <select name="ing_select" id="ing_select" size="10" >
                     {% for res in ing_results %}
                     <option value="{{ res[0] }}">{{ res[1] }}</option>

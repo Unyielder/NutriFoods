@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, and_
+from sqlalchemy import create_engine, Column, Integer, String, and_, func
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.ext.declarative import declarative_base
 from flask_login import UserMixin
@@ -48,8 +48,7 @@ if __name__ == '__main__':
     food_id = 2003
     rs = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
                           NutrientName.NutrientName,
-                          (ConversionFactor.ConversionFactorValue * NutrientAmount.NutrientValue).label(
-                              'NutrientValCalc'),
+                          func.round((ConversionFactor.ConversionFactorValue * NutrientAmount.NutrientValue), 2).label('NutrientValCalc'),
                           NutrientName.NutrientUnit) \
         .outerjoin(ConversionFactor, FoodName.FoodID == ConversionFactor.FoodID) \
         .outerjoin(MeasureName, ConversionFactor.MeasureID == MeasureName.MeasureID) \
@@ -59,5 +58,5 @@ if __name__ == '__main__':
                      FoodName.FoodID == 2003, MeasureName.MeasureDescription == '100ml')).all()
 
     for row in rs:
-        print(row)
+        print(row, 2)
 
