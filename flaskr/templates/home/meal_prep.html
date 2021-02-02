@@ -1,0 +1,12 @@
+{% include 'home/index.html' %}
+
+{% block content %}
+
+<ul>
+    {% for food in meal %}
+    <li>{{ food.name }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

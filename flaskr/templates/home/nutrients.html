@@ -8,6 +8,7 @@
     </div>
     <div class="row">
         <div class="col-6">
+            <h3>{{ food_name }} ({{ measure }})</h3>
             <div class="border border-primary rounded">
                 <h3></h3>
                 <ul>{% for row in ing_nutrients %}
@@ -15,7 +16,9 @@
                     {% endfor %}
                 </ul>
             </div>
-            <button class="btn btn-primary" type="submit" name="addButton">Add Ingredient</button>
+            <form method="post">
+                <input class="btn btn-primary" type="submit" name="addButton" value="Add Ingredient">
+            </form>
         </div>
     </div>
 </div>

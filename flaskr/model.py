@@ -58,5 +58,5 @@ if __name__ == '__main__':
                      FoodName.FoodID == 2003, MeasureName.MeasureDescription == '100ml')).all()
 
     for row in rs:
-        print(row, 2)
+        print(row)
 

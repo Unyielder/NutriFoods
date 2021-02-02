@@ -1,25 +1,29 @@
+from collections import defaultdict
+
+
 class Food:
-    def __init__(self, food_name, selected_measure, calories, proteins,
-                 fat, sat_fat, fiber, carbs):
-        self.food_name = food_name
-        self.measures = ''
-        self.selected_measure = selected_measure
-        self.calories = calories
-        self.proteins = proteins
-        self.fat = fat
-        self.sat_fat = sat_fat
-        self.fiber = fiber
-        self.carbs = carbs
+    def __init__(self):
+        self.name = ''
+        self.measure = ''
+        self.calories = None
+        self.proteins = None
+        self.fat = None
+        self.sat_fat = None
+        self.fiber = None
+        self.carbs = None
 
     def load_measure(self, result_set):
-        self.measures = [res[2] for res in result_set]
+        self.measure = [res[2] for res in result_set]
 
-    def load_macros(self, result_set):
-        macros = {}
+    def load_food(self, result_set):
+        macros = defaultdict(list)
+
+        self.name = result_set[0][1]
+        self.measure = result_set[0][2]
 
         for res in result_set:
-            value = round(res[4], 2)
-            macros[res[3]] = value
+            macros[res[3]].append(res[4])
+            macros[res[3]].append(res[5])
 
         self.calories = macros['CARBOHYDRATE, TOTAL (BY DIFFERENCE)']
         self.proteins = macros['PROTEIN']
