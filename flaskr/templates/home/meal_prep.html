@@ -2,11 +2,27 @@
 
 {% block content %}
 
-<ul>
-    {% for food in meal %}
-    <li>{{ food.name }}</li>
-    {% endfor %}
-</ul>
-
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <ul>
+                {% for food in meal %}
+                    <li>{{ food.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <h3>Macro Breakdown</h3>
+            <ul>
+                <li><b>Calories:</b> {{ macro_stats['calories_total'] }} kCal</li>
+                <li><b>Carbs:</b> {{ macro_stats['carbs_total'] }} g</li>
+                <li><b>Proteins:</b> {{ macro_stats['proteins_total'] }} g</li>
+                <li><b>Fats:</b> {{ macro_stats['fats_total'] }} g</li>
+                <li><b>Saturatd Fats:</b> {{ macro_stats['sat_fats_total'] }} g</li>
+                <li><b>Fiber:</b> {{ macro_stats['fiber_total'] }} g</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

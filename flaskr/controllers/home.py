@@ -4,7 +4,7 @@ from flaskr.model import FoodName, ConversionFactor, MeasureName, NutrientAmount
 from flask_login import login_required
 from sqlalchemy import and_, func
 from flaskr.business_logic.food import Food
-from flaskr.business_logic.meal import Meal
+from collections import defaultdict
 
 bp = Blueprint('home', __name__, url_prefix='/home')
 
@@ -12,6 +12,9 @@ bp = Blueprint('home', __name__, url_prefix='/home')
 @bp.route('/index', methods=('GET', 'POST'))
 @login_required
 def index():
+    food_list = []
+    session['food_list'] = food_list
+
     if request.method == 'POST':
         session['ingredient'] = f"{request.form['ingredient']}%"
         return redirect(url_for('home.search'))
@@ -54,9 +57,6 @@ def serving():
     return render_template('home/serving.html', food_name=food_name, serving_results=serving_results)
 
 
-food_list = []
-
-
 @bp.route('/nutrients', methods=('GET', 'POST'))
 @login_required
 def nutrients():
@@ -79,10 +79,11 @@ def nutrients():
 
     if request.method == 'POST':
         food = Food()
+        food_list = session['food_list']
 
         food.load_food(ing_nutrients)
         food_list.append(food.__dict__)
-        session['meal'] = food_list
+        session['food_list'] = food_list
 
         return redirect(url_for('home.meal_prep'))
 
@@ -94,12 +95,18 @@ def nutrients():
 @bp.route('/meal_prep', methods=('GET', 'POST'))
 @login_required
 def meal_prep():
+    macro_stats = defaultdict(list)
+    meal = session['food_list']
 
-    meal = session['meal']
+    macro_stats['calories_total'] = sum([food['calories'][0] for food in meal])
+    macro_stats['carbs_total'] = sum([food['carbs'][0] for food in meal])
+    macro_stats['proteins_total'] = sum([food['proteins'][0] for food in meal])
+    macro_stats['fats_total'] = sum([food['fat'][0] for food in meal])
+    macro_stats['sat_fats_total'] = sum([food['sat_fat'][0] for food in meal])
+    macro_stats['fiber_total'] = sum([food['fiber'][0] for food in meal])
 
     if request.method == 'POST':
         session['ingredient'] = f"{request.form['ingredient']}%"
-
         return redirect(url_for('home.search'))
 
-    return render_template('home/meal_prep.html', meal=meal)
+    return render_template('home/meal_prep.html', meal=meal, macro_stats=macro_stats)

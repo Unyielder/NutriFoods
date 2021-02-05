@@ -25,7 +25,7 @@ class Food:
             macros[res[3]].append(res[4])
             macros[res[3]].append(res[5])
 
-        self.calories = macros['CARBOHYDRATE, TOTAL (BY DIFFERENCE)']
+        self.calories = macros['ENERGY (KILOCALORIES)']
         self.proteins = macros['PROTEIN']
         self.fat = macros['FAT (TOTAL LIPIDS)']
         self.sat_fat = macros['FATTY ACIDS, SATURATED, TOTAL']
