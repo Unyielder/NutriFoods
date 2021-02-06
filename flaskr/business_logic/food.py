@@ -3,6 +3,7 @@ from collections import defaultdict
 
 class Food:
     def __init__(self):
+        self.id = None
         self.name = ''
         self.measure = ''
         self.calories = None
@@ -18,6 +19,7 @@ class Food:
     def load_food(self, result_set):
         macros = defaultdict(list)
 
+        self.id = result_set[0][0]
         self.name = result_set[0][1]
         self.measure = result_set[0][2]
 
