@@ -112,7 +112,18 @@ def meal_prep():
 
     return render_template('home/meal_prep.html', meal=meal, macro_stats=macro_stats)
 
-@bp.route('/delete_item', methods=('GET', 'POST'))
+
+@bp.route('/delete_item/<int:food_id>', methods=('GET', 'POST'))
 @login_required
-def delete_item():
+def delete_item(food_id):
+    meal = session['food_list']
+
+    meal = [food for food in meal if food['id'] != food_id]
+    session['food_list'] = meal
+
+    return redirect(url_for('home.meal_prep'))
+
+@bp.route('/save_meal', methods=('GET', 'POST'))
+@login_required
+def save_meal():
     pass

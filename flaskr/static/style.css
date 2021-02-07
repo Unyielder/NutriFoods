@@ -9,7 +9,7 @@ ul li {
   border: 1px solid #ddd;
   margin-top: -1px; /* Prevent double borders */
   background-color: #f6f6f6;
-  padding: 12px;
+  padding: 7px;
   text-decoration: none;
   font-size: 18px;
   color: black;
@@ -34,7 +34,7 @@ ul li {
   position: absolute;
   top: 50%;
   right: 0%;
-  padding: 14px 16px;
+  padding: 16px 16px;
   transform: translate(0%, -50%);
 }
 .close:hover {background: #bbb;}
@@ -48,4 +48,8 @@ ul li {
 .listWrapper {
     max-height:300px;
     overflow-y:auto;
+}
+
+.macro_list li {
+    font-size: 18px;
 }
