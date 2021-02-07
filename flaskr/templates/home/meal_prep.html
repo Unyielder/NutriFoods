@@ -7,7 +7,7 @@
         <div class="col-6">
             <ul class="meal_custom">
                 {% for food in meal %}
-                    <li>{{ food.name }}<span class="close">x</span></li>
+                    <li>{{ food.name }}<a class="close" href="{{ url_for('home.delete_item') }}">x</a></li>
                 {% endfor %}
             </ul>
             <form>

@@ -16,31 +16,31 @@ def index():
     session['food_list'] = food_list
 
     if request.method == 'POST':
-        session['ingredient'] = f"{request.form['ingredient']}%"
-        return redirect(url_for('home.search'))
+        ingredient = request.form.get('ingredient')
+        return redirect(url_for('home.search', ingredient=ingredient))
 
     return render_template('home/index.html')
 
 
-@bp.route('/search', methods=('GET', 'POST'))
+@bp.route('/search/<ingredient>', methods=('GET', 'POST'))
 @login_required
-def search():
-    ingredient = session['ingredient']
+def search(ingredient):
 
     ing_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription) \
-        .filter(FoodName.FoodDescription.like(ingredient)).all()
+        .filter(FoodName.FoodDescription.like(f'{ingredient}%')).all()
 
     if request.method == 'POST':
-        session['food_id'] = request.form['ing_select']
-        return redirect(url_for('home.serving'))
+        food_id = request.form['ing_select']
+        session['food_id'] = food_id
+
+        return redirect(url_for('home.serving', food_id=food_id))
 
     return render_template('home/search.html', ing_results=ing_results)
 
 
-@bp.route('/serving', methods=('GET', 'POST'))
+@bp.route('/serving/<int:food_id>', methods=('GET', 'POST'))
 @login_required
-def serving():
-    food_id = session['food_id']
+def serving(food_id):
 
     serving_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription) \
         .outerjoin(ConversionFactor, FoodName.FoodID == ConversionFactor.FoodID) \
@@ -51,18 +51,18 @@ def serving():
     session['food_name'] = food_name
 
     if request.method == 'POST':
-        session['ing_measure'] = request.form['ing_measure']
-        return redirect(url_for('home.nutrients'))
+        measure = request.form['ing_measure']
+        session['ing_measure'] = measure
+
+        return redirect(url_for('home.nutrients', food_id=food_id, measure=measure))
 
     return render_template('home/serving.html', food_name=food_name, serving_results=serving_results)
 
 
-@bp.route('/nutrients', methods=('GET', 'POST'))
+@bp.route('/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'))
 @login_required
-def nutrients():
-    food_id = session['food_id']
+def nutrients(food_id, measure):
     food_name = session['food_name']
-    measure = session['ing_measure']
 
     ing_nutrients = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
                                      NutrientName.NutrientName,
@@ -106,7 +106,13 @@ def meal_prep():
     macro_stats['fiber_total'] = sum([food['fiber'][0] for food in meal])
 
     if request.method == 'POST':
-        session['ingredient'] = f"{request.form['ingredient']}%"
-        return redirect(url_for('home.search'))
+        ingredient = f"{request.form['ingredient']}%"
+        session['ingredient'] = ingredient
+        return redirect(url_for('home.search', ingredient=ingredient))
 
     return render_template('home/meal_prep.html', meal=meal, macro_stats=macro_stats)
+
+@bp.route('/delete_item', methods=('GET', 'POST'))
+@login_required
+def delete_item():
+    pass
