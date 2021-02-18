@@ -130,7 +130,6 @@ def meal_prep():
     if request.method == 'POST':
         if request.form.get("addButton1"):
             ingredient = f"{request.form['ingredient']}%"
-            session['ingredient'] = ingredient
             return redirect(url_for('home.search', ingredient=ingredient))
 
         if request.form.get("addButton2"):
@@ -152,22 +151,3 @@ def delete_item(food_id):
 
     return redirect(url_for('home.meal_prep'))
 
-"""
-@bp.route('/save_meal', methods=('GET', 'POST'))
-@login_required
-def save_meal():
-    meal_name = request.form.get('meal-name')
-    meal = session['food_list']
-    user_id = session['user_id']
-
-    meal_id = db_session.query(MealAdmin.MealID).order_by(MealAdmin.MealID.desc()).first()
-    if meal_id:
-        meal_id += meal_id
-    else:
-        meal_id = 1
-
-    for food in meal:
-        meal_admin = MealAdmin(MealID=meal_id, UserID=user_id, MealName=meal_name,
-                               FoodID=food['id'], FoodDesc=food['name'], Measure=food['measure'])
-        db_session.add(meal_admin)
-        db_session.commit() """
