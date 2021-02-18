@@ -17,7 +17,12 @@
                 </ul>
             </div>
             <form method="post">
-                <input class="btn btn-primary" type="submit" name="addButton" value="Add Ingredient">
+                {% if 'ingredient_2' not in session %}
+                    <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 1" >
+
+                {% else %}
+                    <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 2" >
+                {% endif %}
             </form>
         </div>
     </div>

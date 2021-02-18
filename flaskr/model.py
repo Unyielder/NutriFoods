@@ -13,7 +13,7 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # mapped classes are now created with names by default
-# matching that of the table name.
+
 MeasureName = Base.classes.MEASURE_NAME
 ConversionFactor = Base.classes.CONVERSION_FACTOR
 FoodGroup = Base.classes.FOOD_GROUP

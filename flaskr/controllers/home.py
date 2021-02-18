@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, url_for, session, jsonify
+from flask import Blueprint, redirect, render_template, request, url_for, session
 from flaskr.db import db_session
 from flaskr.model import FoodName, ConversionFactor, MeasureName, NutrientAmount, NutrientName
 from flask_login import login_required
@@ -13,7 +13,10 @@ bp = Blueprint('home', __name__, url_prefix='/home')
 @login_required
 def index():
     food_list = []
+    food_list2 = []
     session['food_list'] = food_list
+    session['food_list2'] = food_list2
+    session.pop('ingredient_2', None)
 
     if request.method == 'POST':
         ingredient = request.form.get('ingredient')
@@ -32,7 +35,6 @@ def search(ingredient):
     if request.method == 'POST':
         food_id = request.form['ing_select']
         session['food_id'] = food_id
-
         return redirect(url_for('home.serving', food_id=food_id))
 
     return render_template('home/search.html', ing_results=ing_results)
@@ -63,7 +65,6 @@ def serving(food_id):
 @login_required
 def nutrients(food_id, measure):
     food_name = session['food_name']
-
     ing_nutrients = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
                                      NutrientName.NutrientName,
                                      func.round((ConversionFactor.ConversionFactorValue * NutrientAmount.NutrientValue),
@@ -78,25 +79,39 @@ def nutrients(food_id, measure):
                      FoodName.FoodID == food_id, MeasureName.MeasureDescription == measure)).all()
 
     if request.method == 'POST':
-        food = Food()
-        food_list = session['food_list']
 
-        food.load_food(ing_nutrients)
-        food_list.append(food.__dict__)
-        session['food_list'] = food_list
+        if 'ingredient_2' not in session:
+            food = Food()
 
+            food_list = session['food_list']
+            food.load_food(ing_nutrients)
+            food_list.append(food.__dict__)
+            session['food_list'] = food_list
+
+        else:
+            food_2 = Food()
+
+            food_list2 = session['food_list2']
+            food_2.load_food(ing_nutrients)
+            food_list2.append(food_2.__dict__)
+            session['food_list2'] = food_list2
+
+            del session['ingredient_2']
         return redirect(url_for('home.meal_prep'))
 
     return render_template('home/nutrients.html', ing_nutrients=ing_nutrients,
                            food_name=food_name,
-                           measure=measure)
+                           measure=measure,
+                           session=session)
 
 
 @bp.route('/meal_prep', methods=('GET', 'POST'))
 @login_required
 def meal_prep():
     macro_stats = defaultdict(list)
+    macro_stats_2 = defaultdict(list)
     meal = session['food_list']
+    meal_2 = session['food_list2']
 
     macro_stats['calories_total'] = sum([food['calories'][0] for food in meal])
     macro_stats['carbs_total'] = sum([food['carbs'][0] for food in meal])
@@ -105,12 +120,26 @@ def meal_prep():
     macro_stats['sat_fats_total'] = sum([food['sat_fat'][0] for food in meal])
     macro_stats['fiber_total'] = sum([food['fiber'][0] for food in meal])
 
-    if request.method == 'POST':
-        ingredient = f"{request.form['ingredient']}%"
-        session['ingredient'] = ingredient
-        return redirect(url_for('home.search', ingredient=ingredient))
+    macro_stats_2['calories_total'] = sum([food['calories'][0] for food in meal_2])
+    macro_stats_2['carbs_total'] = sum([food['carbs'][0] for food in meal_2])
+    macro_stats_2['proteins_total'] = sum([food['proteins'][0] for food in meal_2])
+    macro_stats_2['fats_total'] = sum([food['fat'][0] for food in meal_2])
+    macro_stats_2['sat_fats_total'] = sum([food['sat_fat'][0] for food in meal_2])
+    macro_stats_2['fiber_total'] = sum([food['fiber'][0] for food in meal_2])
 
-    return render_template('home/meal_prep.html', meal=meal, macro_stats=macro_stats)
+    if request.method == 'POST':
+        if request.form.get("addButton1"):
+            ingredient = f"{request.form['ingredient']}%"
+            session['ingredient'] = ingredient
+            return redirect(url_for('home.search', ingredient=ingredient))
+
+        if request.form.get("addButton2"):
+            ingredient = f"{request.form['ingredient2']}%"
+            session['ingredient_2'] = ingredient
+            return redirect(url_for('home.search', ingredient=ingredient))
+
+    return render_template('home/meal_prep.html', meal=meal, meal_2=meal_2,
+                           macro_stats=macro_stats, macro_stats_2=macro_stats_2)
 
 
 @bp.route('/delete_item/<int:food_id>', methods=('GET', 'POST'))
@@ -123,7 +152,22 @@ def delete_item(food_id):
 
     return redirect(url_for('home.meal_prep'))
 
+"""
 @bp.route('/save_meal', methods=('GET', 'POST'))
 @login_required
 def save_meal():
-    pass
+    meal_name = request.form.get('meal-name')
+    meal = session['food_list']
+    user_id = session['user_id']
+
+    meal_id = db_session.query(MealAdmin.MealID).order_by(MealAdmin.MealID.desc()).first()
+    if meal_id:
+        meal_id += meal_id
+    else:
+        meal_id = 1
+
+    for food in meal:
+        meal_admin = MealAdmin(MealID=meal_id, UserID=user_id, MealName=meal_name,
+                               FoodID=food['id'], FoodDesc=food['name'], Measure=food['measure'])
+        db_session.add(meal_admin)
+        db_session.commit() """

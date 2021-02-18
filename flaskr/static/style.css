@@ -11,7 +11,7 @@ ul li {
   background-color: #f6f6f6;
   padding: 7px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   color: black;
   display: block;
   position: relative;
@@ -29,20 +29,20 @@ ul li {
     border-radius: 15px;
     margin-left: 5px;
 }
-.close {
+.remove_item {
   cursor: pointer;
   position: absolute;
   top: 50%;
   right: 0%;
-  padding: 16px 16px;
+  padding: 15px 16px;
   transform: translate(0%, -50%);
 }
-.close:hover {background: #bbb;}
+.remove_item:hover {background: #bbb;}
 
 .row_mt {
     margin-top: 70px;
 }
-.save_meal_ml {
+.add_ml {
     margin-left: 40px;
 }
 .listWrapper {

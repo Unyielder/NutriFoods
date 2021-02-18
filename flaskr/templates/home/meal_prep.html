@@ -1,4 +1,4 @@
-{% include 'home/index.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -9,47 +9,106 @@
                 {% for food in meal %}
                     <li>{{ food.name }}
                         <form action="{{ url_for('home.delete_item', food_id=food['id']) }}">
-                            <input type="submit" class="close" value="x"/>
+                            <input type="submit" class="remove_item" value="x"/>
                         </form>
                     </li>
                 {% endfor %}
             </ul>
-            <form>
-                <input class="btn btn-primary save_meal_ml" type="submit" name="add_meal" value="Save Meal"/>
-            </form>
-        </div>
 
+                <button class="btn btn-primary add_ml" type="submit" name="add_meal"
+                        data-toggle="modal" data-target="#exampleModalCenter">Add</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Please enter ingredient:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="post">
+      <div class="modal-body">
+            <input type="text" class="form-control" name="ingredient" id="ingredient">
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" name="addButton1" value="Search"/>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+        </div>
         <div class="col-6">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <h3>Macro Breakdown</h3>
-                        <ul class="macro_list">
-                            <li><b>Calories: </b> {{ macro_stats['calories_total'] }} kCal</li>
-                            <li><b>Carbs: </b> {{ macro_stats['carbs_total'] }} g</li>
-                            <li><b>Proteins: </b> {{ macro_stats['proteins_total'] }} g</li>
-                            <li><b>Fats: </b> {{ macro_stats['fats_total'] }} g</li>
-                            <li><b>Saturatd Fats: </b> {{ macro_stats['sat_fats_total'] }} g</li>
-                            <li><b>Fiber: </b> {{ macro_stats['fiber_total'] }} g</li>
-                        </ul>
-                    </div>
-                    <div class="carousel-item">
-                        <h3>Vitamins and Minerals</h3>
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+            <ul class="meal_custom">
+                {% for food in meal_2 %}
+                <li>{{ food.name }}
+                    <form action="{{ url_for('home.delete_item', food_id=food['id']) }}">
+                            <input type="submit" class="remove_item" value="x"/>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            <button class="btn btn-primary save_meal_ml" type="submit" name="add_meal"
+                        data-toggle="modal" data-target="#exampleModalCenter2">Add</button>
+
+            <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle2">Please enter ingredient:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="post">
+      <div class="modal-body">
+            <input type="text" class="form-control" name="ingredient2" id="ingredient2">
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-primary" name="addButton2" value="Search"/>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
         </div>
     </div>
 
+    <div class="row row_mt mx-auto">
+        <h3>Macro Breakdown</h3>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <ul class="macro_list">
+                <li><b>Calories: </b> {{ macro_stats['calories_total'] }} kCal</li>
+                <li><b>Carbs: </b> {{ macro_stats['carbs_total'] }} g</li>
+                <li><b>Proteins: </b> {{ macro_stats['proteins_total'] }} g</li>
+                <li><b>Fats: </b> {{ macro_stats['fats_total'] }} g</li>
+                <li><b>Saturated Fats: </b> {{ macro_stats['sat_fats_total'] }} g</li>
+                <li><b>Fiber: </b> {{ macro_stats['fiber_total'] }} g</li>
+            </ul>
+        </div>
+        <div class="col-6">
+            <ul class="macro_list">
+                <li><b>Calories: </b> {{ macro_stats_2['calories_total'] }} kCal</li>
+                <li><b>Carbs: </b> {{ macro_stats_2['carbs_total'] }} g</li>
+                <li><b>Proteins: </b> {{ macro_stats_2['proteins_total'] }} g</li>
+                <li><b>Fats: </b> {{ macro_stats_2['fats_total'] }} g</li>
+                <li><b>Saturated Fats: </b> {{ macro_stats_2['sat_fats_total'] }} g</li>
+                <li><b>Fiber: </b> {{ macro_stats_2['fiber_total'] }} g</li>
+            </ul>
+        </div>
+    </div>
+
+
 </div>
+
+
+
 
 {% endblock %}
 
