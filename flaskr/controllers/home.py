@@ -143,11 +143,19 @@ def meal_prep():
 
 @bp.route('/delete_item/<int:food_id>', methods=('GET', 'POST'))
 @login_required
-def delete_item(food_id):
+def delete_group_1(food_id):
     meal = session['food_list']
-
     meal = [food for food in meal if food['id'] != food_id]
     session['food_list'] = meal
 
     return redirect(url_for('home.meal_prep'))
 
+
+@bp.route('/delete_item2/<int:food_id>', methods=('GET', 'POST'))
+@login_required
+def delete_group_2(food_id):
+    meal_2 = session['food_list2']
+    meal_2 = [food for food in meal_2 if food['id'] != food_id]
+    session['food_list2'] = meal_2
+
+    return redirect(url_for('home.meal_prep'))
