@@ -5,21 +5,24 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">NutriPrep</a>
+  <a class="navbar-brand" href="#">NutriFoods</a>
 
   <div class="container justify-content-end">
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Dashboard</a>
             </li>
           <li class="nav-item active">
-                <a class="nav-link" href="#">Meals</a>
+                <a class="nav-link" href="#">Food Query</a>
+            </li>
+          <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home.food_compare') }}">Nutri Compare</a>
             </li>
         </ul>
 
-
+<!--
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
       {% if session['user_id'] %}
@@ -35,6 +38,7 @@
       <li class="nav-item active"><a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a></li>
     {% endif %}
     </ul>
+    -->
     </div>
   </div>
 </nav>

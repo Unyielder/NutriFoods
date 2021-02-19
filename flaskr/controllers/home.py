@@ -10,7 +10,6 @@ bp = Blueprint('home', __name__, url_prefix='/home')
 
 
 @bp.route('/index', methods=('GET', 'POST'))
-@login_required
 def index():
     food_list = []
     food_list2 = []
@@ -26,7 +25,6 @@ def index():
 
 
 @bp.route('/search/<ingredient>', methods=('GET', 'POST'))
-@login_required
 def search(ingredient):
 
     ing_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription) \
@@ -41,7 +39,6 @@ def search(ingredient):
 
 
 @bp.route('/serving/<int:food_id>', methods=('GET', 'POST'))
-@login_required
 def serving(food_id):
 
     serving_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription) \
@@ -62,7 +59,6 @@ def serving(food_id):
 
 
 @bp.route('/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'))
-@login_required
 def nutrients(food_id, measure):
     food_name = session['food_name']
     ing_nutrients = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
@@ -106,7 +102,6 @@ def nutrients(food_id, measure):
 
 
 @bp.route('/food_compare', methods=('GET', 'POST'))
-@login_required
 def food_compare():
     macro_stats = defaultdict(list)
     macro_stats_2 = defaultdict(list)
@@ -142,7 +137,6 @@ def food_compare():
 
 
 @bp.route('/delete_item/<int:food_id>', methods=('GET', 'POST'))
-@login_required
 def delete_group_1(food_id):
     meal = session['food_list']
     meal = [food for food in meal if food['id'] != food_id]
@@ -152,7 +146,6 @@ def delete_group_1(food_id):
 
 
 @bp.route('/delete_item2/<int:food_id>', methods=('GET', 'POST'))
-@login_required
 def delete_group_2(food_id):
     meal_2 = session['food_list2']
     meal_2 = [food for food in meal_2 if food['id'] != food_id]
