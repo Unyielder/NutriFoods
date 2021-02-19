@@ -42,6 +42,10 @@ ul li {
 .row_mt {
     margin-top: 70px;
 }
+
+.macro_mt {
+    margin-top: 30px;
+}
 .add_ml {
     margin-left: 40px;
 }
@@ -52,4 +56,11 @@ ul li {
 
 .macro_list li {
     font-size: 18px;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
 }

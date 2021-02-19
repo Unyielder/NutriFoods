@@ -97,7 +97,7 @@ def nutrients(food_id, measure):
             session['food_list2'] = food_list2
 
             del session['ingredient_2']
-        return redirect(url_for('home.meal_prep'))
+        return redirect(url_for('home.food_compare'))
 
     return render_template('home/nutrients.html', ing_nutrients=ing_nutrients,
                            food_name=food_name,
@@ -105,9 +105,9 @@ def nutrients(food_id, measure):
                            session=session)
 
 
-@bp.route('/meal_prep', methods=('GET', 'POST'))
+@bp.route('/food_compare', methods=('GET', 'POST'))
 @login_required
-def meal_prep():
+def food_compare():
     macro_stats = defaultdict(list)
     macro_stats_2 = defaultdict(list)
     meal = session['food_list']
@@ -137,7 +137,7 @@ def meal_prep():
             session['ingredient_2'] = ingredient
             return redirect(url_for('home.search', ingredient=ingredient))
 
-    return render_template('home/meal_prep.html', meal=meal, meal_2=meal_2,
+    return render_template('home/food_compare.html', meal=meal, meal_2=meal_2,
                            macro_stats=macro_stats, macro_stats_2=macro_stats_2)
 
 
@@ -148,7 +148,7 @@ def delete_group_1(food_id):
     meal = [food for food in meal if food['id'] != food_id]
     session['food_list'] = meal
 
-    return redirect(url_for('home.meal_prep'))
+    return redirect(url_for('home.food_compare'))
 
 
 @bp.route('/delete_item2/<int:food_id>', methods=('GET', 'POST'))
@@ -158,4 +158,4 @@ def delete_group_2(food_id):
     meal_2 = [food for food in meal_2 if food['id'] != food_id]
     session['food_list2'] = meal_2
 
-    return redirect(url_for('home.meal_prep'))
+    return redirect(url_for('home.food_compare'))
