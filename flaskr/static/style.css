@@ -29,6 +29,13 @@ ul li {
     border-radius: 15px;
     margin-left: 5px;
 }
+
+.unstyled-button {
+  border: none;
+  padding: 0;
+  background: none;
+}
+
 .remove_item {
   cursor: pointer;
   position: absolute;

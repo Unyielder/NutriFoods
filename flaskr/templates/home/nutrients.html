@@ -4,7 +4,11 @@
 
 <div class="container">
     <div class="row">
-        <a href="{{ url_for('home.food_compare') }}">Back to ingredient Search</a>
+        {% if 'nut_q' in request.path %}
+            <a href="{{ url_for('home.food_query') }}">Back to ingredient Search</a>
+        {% else %}
+            <a href="{{ url_for('home.food_compare') }}">Back to group nutrient analysis</a>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-6">
@@ -17,10 +21,10 @@
                 </ul>
             </div>
             <form method="post">
-                {% if 'ingredient_2' not in session %}
+                {% if 'nut_c1' in request.path %}
                     <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 1" >
 
-                {% else %}
+                {% elif 'nut_c2' in request.path %}
                     <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 2" >
                 {% endif %}
             </form>

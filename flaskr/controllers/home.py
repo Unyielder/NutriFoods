@@ -1,7 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for, session
 from flaskr.db import db_session
 from flaskr.model import FoodName, ConversionFactor, MeasureName, NutrientAmount, NutrientName
-from flask_login import login_required
 from sqlalchemy import and_, func
 from flaskr.business_logic.food import Food
 from collections import defaultdict
@@ -11,25 +10,29 @@ bp = Blueprint('home', __name__, url_prefix='/home')
 
 @bp.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('home/index.html')
-
-
-@bp.route('/food_query', methods=('GET', 'POST'))
-def food_query():
+    # Initializes food group variables for group analysis
     food_list = []
     food_list2 = []
     session['food_list'] = food_list
     session['food_list2'] = food_list2
 
+    return render_template('home/index.html')
+
+
+@bp.route('/food_query', methods=('GET', 'POST'))
+def food_query():
+
     if request.method == 'POST':
+
         ingredient = request.form.get('ingredient')
-        return redirect(url_for('home.search', endpoint='fq', ingredient=ingredient))
+        return redirect(url_for('home.sch_q', ingredient=ingredient))
 
     return render_template('home/food_query.html')
 
 
-@bp.route('fq/search/<ingredient>', methods=('GET', 'POST'), endpoint='fq')
-@bp.route('fc/search/<ingredient>', methods=('GET', 'POST'), endpoint='fc')
+@bp.route('sch_q/search/<ingredient>', methods=('GET', 'POST'), endpoint='sch_q')
+@bp.route('sch_c1/search/<ingredient>', methods=('GET', 'POST'), endpoint='sch_c1')
+@bp.route('sch_c2/search/<ingredient>', methods=('GET', 'POST'), endpoint='sch_c2')
 def search(ingredient):
 
     ing_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription) \
@@ -39,15 +42,19 @@ def search(ingredient):
         food_id = request.form['ing_select']
         session['food_id'] = food_id
 
-        if request.endpoint is 'fq':
-            return redirect(url_for('home.serving', endpoint='fq', food_id=food_id))
-        elif request.endpoint is 'fc':
-            return redirect(url_for('home.serving', endpoint='fc', food_id=food_id))
+        if 'sch_q' in request.path:
+            return redirect(url_for('home.ser_q', food_id=food_id))
+        elif 'sch_c1' in request.path:
+            return redirect(url_for('home.ser_c1', food_id=food_id))
+        elif 'sch_c2' in request.path:
+            return redirect(url_for('home.ser_c2', food_id=food_id))
 
     return render_template('home/search.html', ing_results=ing_results)
 
 
-@bp.route('/serving/<int:food_id>', methods=('GET', 'POST'))
+@bp.route('ser_q/serving/<int:food_id>', methods=('GET', 'POST'), endpoint='ser_q')
+@bp.route('ser_c1/serving/<int:food_id>', methods=('GET', 'POST'), endpoint='ser_c1')
+@bp.route('ser_c2/serving/<int:food_id>', methods=('GET', 'POST'), endpoint='ser_c2')
 def serving(food_id):
 
     serving_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription) \
@@ -62,13 +69,21 @@ def serving(food_id):
         measure = request.form['ing_measure']
         session['ing_measure'] = measure
 
-        return redirect(url_for('home.nutrients', food_id=food_id, measure=measure))
+        if 'ser_q' in request.path:
+            return redirect(url_for('home.nut_q', food_id=food_id, measure=measure))
+        elif 'ser_c1' in request.path:
+            return redirect(url_for('home.nut_c1', food_id=food_id, measure=measure))
+        elif 'ser_c2' in request.path:
+            return redirect(url_for('home.nut_c2', food_id=food_id, measure=measure))
 
     return render_template('home/serving.html', food_name=food_name, serving_results=serving_results)
 
 
-@bp.route('/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'))
+@bp.route('nut_q/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_q')
+@bp.route('nut_c1/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_c1')
+@bp.route('nut_c2/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_c2')
 def nutrients(food_id, measure):
+
     food_name = session['food_name']
     ing_nutrients = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
                                      NutrientName.NutrientName,
@@ -85,7 +100,7 @@ def nutrients(food_id, measure):
 
     if request.method == 'POST':
 
-        if 'ingredient_2' not in session:
+        if 'nut_c1' in request.path:
             food = Food()
 
             food_list = session['food_list']
@@ -93,7 +108,7 @@ def nutrients(food_id, measure):
             food_list.append(food.__dict__)
             session['food_list'] = food_list
 
-        else:
+        elif 'nut_c2' in request.path:
             food_2 = Food()
 
             food_list2 = session['food_list2']
@@ -101,13 +116,12 @@ def nutrients(food_id, measure):
             food_list2.append(food_2.__dict__)
             session['food_list2'] = food_list2
 
-            del session['ingredient_2']
         return redirect(url_for('home.food_compare'))
 
     return render_template('home/nutrients.html', ing_nutrients=ing_nutrients,
                            food_name=food_name,
                            measure=measure,
-                           session=session)
+                           request=request)
 
 
 @bp.route('/food_compare', methods=('GET', 'POST'))
@@ -135,12 +149,12 @@ def food_compare():
     if request.method == 'POST':
         if request.form.get("addButton1"):
             ingredient = f"{request.form['ingredient']}%"
-            return redirect(url_for('home.search', ingredient=ingredient))
+            return redirect(url_for('home.sch_c1', ingredient=ingredient))
 
         if request.form.get("addButton2"):
             ingredient = f"{request.form['ingredient2']}%"
             session['ingredient_2'] = ingredient
-            return redirect(url_for('home.search', ingredient=ingredient))
+            return redirect(url_for('home.sch_c2', ingredient=ingredient))
 
     return render_template('home/food_compare.html', meal=meal, meal_2=meal_2,
                            macro_stats=macro_stats, macro_stats_2=macro_stats_2)
