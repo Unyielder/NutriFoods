@@ -9,22 +9,27 @@ from collections import defaultdict
 bp = Blueprint('home', __name__, url_prefix='/home')
 
 
-@bp.route('/index', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET', 'POST'))
 def index():
+    return render_template('home/index.html')
+
+
+@bp.route('/food_query', methods=('GET', 'POST'))
+def food_query():
     food_list = []
     food_list2 = []
     session['food_list'] = food_list
     session['food_list2'] = food_list2
-    session.pop('ingredient_2', None)
 
     if request.method == 'POST':
         ingredient = request.form.get('ingredient')
-        return redirect(url_for('home.search', ingredient=ingredient))
+        return redirect(url_for('home.search', endpoint='fq', ingredient=ingredient))
 
-    return render_template('home/index.html')
+    return render_template('home/food_query.html')
 
 
-@bp.route('/search/<ingredient>', methods=('GET', 'POST'))
+@bp.route('fq/search/<ingredient>', methods=('GET', 'POST'), endpoint='fq')
+@bp.route('fc/search/<ingredient>', methods=('GET', 'POST'), endpoint='fc')
 def search(ingredient):
 
     ing_results = db_session.query(FoodName.FoodID, FoodName.FoodDescription) \
@@ -33,7 +38,11 @@ def search(ingredient):
     if request.method == 'POST':
         food_id = request.form['ing_select']
         session['food_id'] = food_id
-        return redirect(url_for('home.serving', food_id=food_id))
+
+        if request.endpoint is 'fq':
+            return redirect(url_for('home.serving', endpoint='fq', food_id=food_id))
+        elif request.endpoint is 'fc':
+            return redirect(url_for('home.serving', endpoint='fc', food_id=food_id))
 
     return render_template('home/search.html', ing_results=ing_results)
 
@@ -103,6 +112,7 @@ def nutrients(food_id, measure):
 
 @bp.route('/food_compare', methods=('GET', 'POST'))
 def food_compare():
+
     macro_stats = defaultdict(list)
     macro_stats_2 = defaultdict(list)
     meal = session['food_list']
