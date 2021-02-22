@@ -65,7 +65,7 @@ CYSTINE
 ARGININE
 
 -------------------------------------------------
-
+# Not sure
 PROTEIN
 SODIUM
 ENERGY (KILOJOULES)
