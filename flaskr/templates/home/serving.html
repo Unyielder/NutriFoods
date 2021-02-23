@@ -10,18 +10,41 @@
         {% if 'ser_q' in request.path %}
             <a href="{{ url_for('home.food_query') }}">Back to ingredient Search</a>
         {% else %}
-            <a href="{{ url_for('home.food_compare') }}">Back to group nutrient analysis</a>
+            <a href="{{ url_for('home.food_compare') }}">Back to group analysis</a>
         {% endif %}
     </div>
 
-    <div class="row">
+    <div class="row h-75">
         <div class="col-4">
             <form method="post">
-                <select name="ing_measure" id="ing_measure" size="5" >
+                <div class="form-group">
+                    <select name="ing_measure" id="ing_measure" size="5" >
                     {% for res in serving_results %}
                     <option value="{{ res[2] }}">{{ res[2] }}</option>
                     {% endfor %}
                 </select>
+                </div>
+                <fieldset>
+                    <legend>Types of nutrients</legend>
+
+                    <input class="check" type="checkbox" id="vitamins" name="check" value="vitamins">
+                    <label for="vitamins">Vitamins</label><br>
+
+                    <input class="check" type="checkbox" id="minerals" name="check" value="minerals">
+                    <label for="minerals">Minerals</label><br>
+
+                    <input class="check" type="checkbox" id="amino_acids" name="check" value="amino_acids">
+                    <label for="amino_acids">Amino_acids</label><br>
+
+                   <input class="check" type="checkbox" id="steroids" name="check" value="steroids">
+                    <label for="steroids">Steroids</label><br>
+
+                    <input class="check" type="checkbox" id="misc" name="check" value="misc">
+                <label for="misc">Misc</label>
+
+                </fieldset>
+
+
                 <input class="btn btn-primary" type="submit" name="btn" value="Select">
             </form>
         </div>
