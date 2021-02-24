@@ -14,26 +14,46 @@ class Food:
         self.fiber = None
         self.carbs = None
         # Vitamins
-        self.thiamine = None # vitamin B1
+        self.alpha_tocopherol_added = None
+        self.alpha_tocopherol = None
+        self.beta_tocopherol = None
+        self.gamma_tocopherol = None
+        self.delta_tocopherol = None
+        self.folate = None
+        self.pantothenic_acid = None
+        self.thiamin = None
+        self.biotin = None
         self.vitamin_b12 = None
         self.vitamin_b12_added = None
         self.vitamin_b6 = None
-        self.niacin = None # form of vitamin B3
+        self.total_niacin = None
+        self.niacin_preformed = None
+        self.folacin = None
+        self.folate = None
+        self.folic_acid = None
+        self.riboflavin = None
         self.vitamin_c = None
-        self.vitamin_d_d2_d3 = None
+        self.vitamin_d2_d3 = None
         self.vitamin_d = None
         self.vitamin_d2 = None
         self.vitamin_k = None
         self.retinol = None
+        self.retinol_activity_equi = None
+        self.alpha_carotene = None
         # Minerals
         self.zinc = None
         self.selenium = None
-
+        self.calcium = None
+        self.potassium = None
+        self.iron = None
+        self.manganese = None
+        self.magnesium = None
+        self.copper = None
 
     def load_measure(self, result_set):
         self.measure = [res[2] for res in result_set]
 
-    def load_food(self, result_set):
+    def load_macros(self, result_set):
         macros = defaultdict(list)
 
         self.id = result_set[0][0]

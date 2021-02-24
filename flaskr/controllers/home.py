@@ -69,6 +69,12 @@ def serving(food_id):
         measure = request.form['ing_measure']
         session['ing_measure'] = measure
 
+        session['checked'] = []
+        for checkbox in 'vitamins', 'minerals', 'amino_acids', 'steroids', 'misc':
+            value = request.form.get(checkbox)
+            if value:
+                session['checked'].append(value)
+
         if 'ser_q' in request.path:
             return redirect(url_for('home.nut_q', food_id=food_id, measure=measure))
         elif 'ser_c1' in request.path:
@@ -98,23 +104,23 @@ def nutrients(food_id, measure):
         .filter(and_(NutrientName.NutrientCode.in_((208, 203, 204, 606, 291, 205)),
                      FoodName.FoodID == food_id, MeasureName.MeasureDescription == measure)).all()
 
-    if request.method == 'POST':
+    if 'nut_c1' in request.path:
+        food = Food()
 
-        if 'nut_c1' in request.path:
-            food = Food()
+        food_list = session['food_list']
+        food.load_macros(ing_nutrients)
+        food_list.append(food.__dict__)
+        session['food_list'] = food_list
 
-            food_list = session['food_list']
-            food.load_food(ing_nutrients)
-            food_list.append(food.__dict__)
-            session['food_list'] = food_list
+        return redirect(url_for('home.food_compare'))
 
-        elif 'nut_c2' in request.path:
-            food_2 = Food()
+    elif 'nut_c2' in request.path:
+        food_2 = Food()
 
-            food_list2 = session['food_list2']
-            food_2.load_food(ing_nutrients)
-            food_list2.append(food_2.__dict__)
-            session['food_list2'] = food_list2
+        food_list2 = session['food_list2']
+        food_2.load_macros(ing_nutrients)
+        food_list2.append(food_2.__dict__)
+        session['food_list2'] = food_list2
 
         return redirect(url_for('home.food_compare'))
 
