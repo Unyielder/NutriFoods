@@ -56,10 +56,6 @@ class Food:
     def load_macros(self, result_set):
         macros = defaultdict(list)
 
-        self.id = result_set[0][0]
-        self.name = result_set[0][1]
-        self.measure = result_set[0][2]
-
         for res in result_set:
             macros[res[3]].append(res[4])
             macros[res[3]].append(res[5])
@@ -70,6 +66,21 @@ class Food:
         self.sat_fat = macros['FATTY ACIDS, SATURATED, TOTAL']
         self.fiber = macros['FIBRE, TOTAL DIETARY']
         self.carbs = macros['CARBOHYDRATE, TOTAL (BY DIFFERENCE)']
+
+    def load_vitamins(self, result_set):
+        pass
+
+    def load_minerals(self, result_set):
+        pass
+
+    def load_aminos(self, result_set):
+        pass
+
+    def load_steroids(self, result_set):
+        pass
+
+    def load_misc(self, result_set):
+        pass
 
     def change_serving(self, factor):
         self.calories = self.calories * factor

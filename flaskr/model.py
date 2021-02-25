@@ -71,7 +71,7 @@ if __name__ == '__main__':
         511, 203
     )
 
-    # Cholesterol
+    # Steroids
     nut_codes = (
         639, 638, 641, 636, 601
     )
