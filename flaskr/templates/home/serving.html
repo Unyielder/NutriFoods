@@ -24,28 +24,7 @@
                     {% endfor %}
                 </select>
                 </div>
-                {% if 'ser_q' in request.path %}
-                <fieldset>
-                    <legend>Types of nutrients</legend>
-                    <input class="check" type="checkbox" id="macros" name="macros" value="macros">
-                    <label for="macros">Macros</label><br>
 
-                    <input class="check" type="checkbox" id="vitamins" name="vitamins" value="vitamins">
-                    <label for="vitamins">Vitamins</label><br>
-
-                    <input class="check" type="checkbox" id="minerals" name="minerals" value="minerals">
-                    <label for="minerals">Minerals</label><br>
-
-                    <input class="check" type="checkbox" id="amino_acids" name="amino_acids" value="amino_acids">
-                    <label for="amino_acids">Amino_acids</label><br>
-
-                   <input class="check" type="checkbox" id="steroids" name="steroids" value="steroids">
-                    <label for="steroids">Steroids</label><br>
-
-                    <input class="check" type="checkbox" id="misc" name="misc" value="misc">
-                <label for="misc">Misc</label>
-                </fieldset>
-                {% endif %}
 
                 <input class="btn btn-primary" type="submit" name="btn" value="Select">
             </form>

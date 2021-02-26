@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script src="handleCheck.js">
+    import { handleCheck } from "handleCheck.js"
+</script>
 
 <div class="container">
     <div class="row">
@@ -19,18 +22,93 @@
                     <li><b>{{ row[3] }}:</b> {{ row[4] }}{{ row[5] }}</li>
                     {% endfor %}
                 </ul>
-            </div>
-            <form method="post">
-                {% if 'nut_c1' in request.path %}
-                    <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 1" >
+                <ul id="macros">
+                    <li><b>Calories:</b> : {{ food.calories }}</li>
+                    <li><b>Carbs:</b> : {{ food.carbs }}</li>
+                    <li><b>Fats:</b> : {{ food.fat }}</li>
+                    <li><b>Saturated Fats:</b> : {{ food.sat_fat }}</li>
+                    <li><b>Proteins:</b> : {{ food.proteins }}</li>
+                    <li><b>Fiber:</b> : {{ food.fiber }}</li>
+                </ul>
+                <ul id="vitamins" style="display:none">
+                    <li><b>Alpha Carotene:</b></li>
+                    <li><b>Beta Carotene:</b></li>
+                    <li><b>Retinol:</b></li>
+                    <li><b>Retinol Activity Equivalents:</b></li>
+                    <li><b>Vitamin B6:</b></li>
+                    <li><b>Vitamin B12:</b></li>
+                    <li><b>Vitamin B12 Added:</b></li>
+                    <li><b>Riboflavin:</b></li>
+                    <li><b>Folate:</b></li>
+                    <li><b>Folacin:</b></li>
+                    <li><b>Folic Acid:</b></li>
+                    <li><b>Total Niacin:</b></li>
+                    <li><b>Niacin preformed:</b></li>
+                    <li><b>Biotin:</b></li>
+                    <li><b>Thiamine:</b></li>
+                    <li><b>Pantothenic Acid:</b></li>
+                    <li><b>Vitamin C:</b></li>
+                    <li><b>Vitamin D:</b></li>
+                    <li><b>Vitamin D2:</b></li>
+                    <li><b>Vitamin D2, D3:</b></li>
+                    <li><b>Alpha-tocopherol:</b></li>
+                    <li><b>Alpha-tocopherol added:</b></li>
+                    <li><b>Beta-tocopherol:</b></li>
+                    <li><b>Gamma-tocopherol:</b></li>
+                    <li><b>Delta-tocopherol:</b></li>
+                    <li><b>Vitamin K:</b></li>
+                </ul>
+                <ul class="minerals" style="display:none">
+                    <li><b>Calcium:</b></li>
+                    <li><b>Copper:</b></li>
+                    <li><b>Iron:</b></li>
+                    <li><b>Magnesium:</b></li>
+                    <li><b>Manganese:</b></li>
+                    <li><b>Potassium:</b></li>
+                    <li><b>Selenium:</b></li>
+                    <li><b>Zinc:</b></li>
+                </ul>
 
-                {% elif 'nut_c2' in request.path %}
-                    <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 2" >
+            </div>
+        </div>
+        <div class="col-6">
+                {% if 'nut_q' in request.path %}
+                <fieldset>
+                    <legend>Types of nutrients</legend>
+                    <input class="check" type="checkbox" id="macrosCheck" onclick="handleClick()" checked>
+                    <label for="macros">Macros</label><br>
+
+                    <input class="check" type="checkbox" id="vitaminsCheck" onclick="handleClick()">
+                    <label for="vitamins">Vitamins</label><br>
+
+                    <input class="check" type="checkbox" id="mineralsCheck" onclick="handleClick()">
+                    <label for="mineralsCheck">Minerals</label><br>
+
+                    <input class="check" type="checkbox" id="aminosCheck" onclick="handleClick()">
+                    <label for="aminosCheck">Amino_acids</label><br>
+
+                   <input class="check" type="checkbox" id="steroidsCheck" onclick="handleClick()">
+                    <label for="steroidsCheck">Steroids</label><br>
+
+                    <input class="check" type="checkbox" id="miscCheck" onclick="handleClick()">
+                <label for="miscCheck">Misc</label>
+                </fieldset>
                 {% endif %}
-            </form>
         </div>
     </div>
+    <div class="row">
+        <form method="post">
+            {% if 'nut_c1' in request.path %}
+            <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 1" >
+
+            {% elif 'nut_c2' in request.path %}
+            <input class="btn btn-primary" type="submit" name="compare" value="Add to Group 2" >
+            {% endif %}
+        </form>
+    </div>
+
 </div>
+
 
 
 {% endblock %}

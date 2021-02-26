@@ -6,13 +6,14 @@ class Food:
         self.id = None
         self.name = ''
         self.measure = ''
+
         # Macros
         self.calories = None
-        self.proteins = None
+        self.carbs = None
         self.fat = None
         self.sat_fat = None
+        self.proteins = None
         self.fiber = None
-        self.carbs = None
         # Vitamins
         self.alpha_tocopherol_added = None
         self.alpha_tocopherol = None
@@ -40,6 +41,7 @@ class Food:
         self.retinol = None
         self.retinol_activity_equi = None
         self.alpha_carotene = None
+        self.beta_carotene = None
         # Minerals
         self.zinc = None
         self.selenium = None

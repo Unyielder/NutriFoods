@@ -63,13 +63,13 @@ def serving(food_id):
 
     if request.method == 'POST':
         measure = request.form['ing_measure']
-        session['ing_measure'] = measure
 
-        session['checked'] = []
-        for checkbox in 'macros', 'vitamins', 'minerals', 'amino_acids', 'steroids', 'misc':
-            value = request.form.get(checkbox)
-            if value:
-                session['checked'].append(value)
+
+        #session['checked'] = []
+        #for checkbox in 'macros', 'vitamins', 'minerals', 'amino_acids', 'steroids', 'misc':
+        #    value = request.form.get(checkbox)
+        #    if value:
+        #        session['checked'].append(value)
 
         if 'ser_q' in request.path:
             return redirect(url_for('home.nut_q', food_id=food_id, measure=measure))
@@ -97,93 +97,89 @@ def nutrient_query(nutrient_codes, food_id, measure):
     return res
 
 
+def load_food(food_id, measure):
+    food = Food()
+
+    macro_codes = (208, 203, 204, 606, 291, 205)
+    res = nutrient_query(macro_codes, food_id, measure)
+    food.load_macros(res)
+
+    vit_codes = (
+        430, 573, 323, 341, 342,
+        343, 325, 324, 328, 401,
+        435, 410, 415, 418, 578,
+        416, 404, 409, 406, 405,
+        417, 432, 431, 320, 319,
+        322)
+    res = nutrient_query(vit_codes, food_id, measure)
+    food.load_vitamins(res)
+
+    mineral_codes = (
+        301, 317, 306, 303,
+        315, 304, 312, 309
+    )
+    res = nutrient_query(mineral_codes, food_id, measure)
+    food.load_minerals(res)
+
+    amino_codes = (
+        510, 509, 501, 502, 263,
+        517, 518, 508, 513, 514,
+        550, 504, 505, 503, 521,
+        512, 516, 515, 506, 507,
+        511, 203
+    )
+    res = nutrient_query(amino_codes, food_id, measure)
+    food.load_aminos(res)
+
+    steroid_codes = (
+        639, 638, 641, 636, 601
+    )
+    res = nutrient_query(steroid_codes, food_id, measure)
+    food.load_steroids(res)
+
+    misc_codes = (
+        305, 245, 255, 337, 338,
+        421, 262, 454, 334, 321,
+        207, 221
+    )
+    res = nutrient_query(misc_codes, food_id, measure)
+    food.load_misc(res)
+
+    return food
+
+
 @bp.route('nut_q/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_q')
 @bp.route('nut_c1/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_c1')
 @bp.route('nut_c2/nutrients/<int:food_id>/<measure>', methods=('GET', 'POST'), endpoint='nut_c2')
 def nutrients(food_id, measure):
-    if 'nut_q' in request.path:
-        food = Food()
-        food_name = session['food_name']
+    food_name = session['food_name']
 
-        food.id = food_id
-        food.name = food_name
-        food.measure = measure
+    food = load_food(food_id, measure)
 
-        if 'macros' in session['checked']:
-            macro_codes = (208, 203, 204, 606, 291, 205)
-            res = nutrient_query(macro_codes, food_id, measure)
-            food.load_macros(res)
+    food.id = food_id
+    food.name = food_name
+    food.measure = measure
 
-        elif 'vitamins' in session['checked']:
-            vit_codes = (
-                430, 573, 323, 341, 342,
-                343, 325, 324, 328, 401,
-                435, 410, 415, 418, 578,
-                416, 404, 409, 406, 405,
-                417, 432, 431, 320, 319,
-                322)
-            res = nutrient_query(vit_codes, food_id, measure)
-            food.load_vitamins(res)
-
-        elif 'minerals' in session['checked']:
-            mineral_codes = (
-                301, 317, 306, 303,
-                315, 304, 312, 309
-            )
-            res = nutrient_query(mineral_codes, food_id, measure)
-            food.load_minerals(res)
-
-        elif 'amino_acids' in session['checked']:
-            amino_codes = (
-                510, 509, 501, 502, 263,
-                517, 518, 508, 513, 514,
-                550, 504, 505, 503, 521,
-                512, 516, 515, 506, 507,
-                511, 203
-        )
-            res = nutrient_query(amino_codes, food_id, measure)
-            food.load_aminos(res)
-
-        elif 'steroids' in session['checked']:
-            steroid_codes = (
-                639, 638, 641, 636, 601
-            )
-            res = nutrient_query(steroid_codes, food_id, measure)
-            food.load_steroids(res)
-
-        elif 'misc' in session['checked']:
-            misc_codes = (
-                305, 245, 255, 337, 338,
-                421, 262, 454, 334, 321,
-                207, 221
-            )
-            res = nutrient_query(misc_codes, food_id, measure)
-            food.load_misc(res)
-
-    else:
-        pass
     if request.method == 'POST':
         if 'nut_c1' in request.path:
-            food = Food()
+            food = load_food(food_id, measure)
 
             food_list = session['food_list']
-            food.load_macros(ing_nutrients)
             food_list.append(food.__dict__)
             session['food_list'] = food_list
 
             return redirect(url_for('home.food_compare'))
 
         elif 'nut_c2' in request.path:
-            food_2 = Food()
+            food_2 = load_food(food_id, measure)
 
             food_list2 = session['food_list2']
-            food_2.load_macros(ing_nutrients)
             food_list2.append(food_2.__dict__)
             session['food_list2'] = food_list2
 
             return redirect(url_for('home.food_compare'))
 
-    return render_template('home/nutrients.html', ing_nutrients=ing_nutrients,
+    return render_template('home/nutrients.html', food=food,
                            food_name=food_name,
                            measure=measure,
                            request=request)
