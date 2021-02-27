@@ -100,50 +100,36 @@ def nutrient_query(nutrient_codes, food_id, measure):
 def load_food(food_id, measure):
     food = Food()
 
-    macro_codes = (208, 203, 204, 606, 291, 205)
-    res = nutrient_query(macro_codes, food_id, measure)
-    food.load_macros(res)
-
-    vit_codes = (
+    nutrient_codes = (
+        # Macros
+        208, 203, 204, 606, 291,
+        205,
+        # Vitamins
         430, 573, 323, 341, 342,
         343, 325, 324, 328, 401,
         435, 410, 415, 418, 578,
         416, 404, 409, 406, 405,
         417, 432, 431, 320, 319,
-        322)
-    res = nutrient_query(vit_codes, food_id, measure)
-    food.load_vitamins(res)
-
-    mineral_codes = (
+        322,
+        # Minerals
         301, 317, 306, 303,
-        315, 304, 312, 309
-    )
-    res = nutrient_query(mineral_codes, food_id, measure)
-    food.load_minerals(res)
-
-    amino_codes = (
+        315, 304, 312, 309,
+        # Amino-acids
         510, 509, 501, 502, 263,
         517, 518, 508, 513, 514,
         550, 504, 505, 503, 521,
         512, 516, 515, 506, 507,
-        511, 203
-    )
-    res = nutrient_query(amino_codes, food_id, measure)
-    food.load_aminos(res)
-
-    steroid_codes = (
-        639, 638, 641, 636, 601
-    )
-    res = nutrient_query(steroid_codes, food_id, measure)
-    food.load_steroids(res)
-
-    misc_codes = (
+        511, 203,
+        # Steroids
+        639, 638, 641, 636, 601,
+        # Misc
         305, 245, 255, 337, 338,
         421, 262, 454, 334, 321,
         207, 221
     )
-    res = nutrient_query(misc_codes, food_id, measure)
-    food.load_misc(res)
+
+    res = nutrient_query(nutrient_codes, food_id, measure)
+    food.load_nutrients(res)
 
     return food
 

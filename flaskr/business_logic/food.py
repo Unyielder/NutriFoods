@@ -55,13 +55,14 @@ class Food:
     def load_measure(self, result_set):
         self.measure = [res[2] for res in result_set]
 
-    def load_macros(self, result_set):
+    def load_nutrients(self, result_set):
         macros = defaultdict(list)
 
         for res in result_set:
             macros[res[3]].append(res[4])
             macros[res[3]].append(res[5])
 
+        # Macros
         self.calories = macros['ENERGY (KILOCALORIES)']
         self.proteins = macros['PROTEIN']
         self.fat = macros['FAT (TOTAL LIPIDS)']
@@ -69,20 +70,44 @@ class Food:
         self.fiber = macros['FIBRE, TOTAL DIETARY']
         self.carbs = macros['CARBOHYDRATE, TOTAL (BY DIFFERENCE)']
 
-    def load_vitamins(self, result_set):
-        pass
+        # Vitamins
+        self.alpha_carotene = macros['ALPHA CAROTENE']
+        self.beta_carotene= macros['BETA CAROTENE']
+        self.retinol = macros['RETINOL']
+        self.vitamin_d = macros['VITAMIN D (INTERNATIONAL UNITS)']
+        self.vitamin_d2 = macros['VITAMIN D2, ERGOCALCIFEROL']
+        self.d2_d3 = macros['VITAMIN D (D2 + D3)']
+        self.vitamin_c = macros['VITAMIN C']
+        self.thiamine = macros['THIAMIN']
+        self.riboflavin = macros['RIBOFLAVIN']
+        self.niacin_preformed = macros['NIACIN (NICOTINIC ACID) PREFORMED']
+        self.total_niacin = macros['TOTAL NIACIN EQUIVALENT']
+        self.vitamin_b6 = macros['VITAMIN B-6']
+        self.folacin = macros['TOTAL FOLACIN']
+        self.vitamin_b12 = macros['VITAMIN B-12']
+        self.vitamin_b12_added = macros['VITAMIN B12, ADDED']
+        self.folic_acid = macros['FOLIC ACID']
+        self.folate = macros['NATURALLY OCCURRING FOLATE']
+        self.retinol_activity_equi = macros['RETINOL ACTIVITY EQUIVALENTS']
+        self.alpha_tocopherol = macros['ALPHA-TOCOPHEROL']
+        self.alpha_tocopherol_added = macros['ALPHA-TOCOPHEROL, ADDED']
+        self.beta_tocopherol = macros['BETA-TOCOPHEROL']
+        self.gamma_tocopherol = macros['GAMMA-TOCOPHEROL']
+        self.delta_tocopherol = macros['DELTA-TOCOPHEROL']
+        self.pantothenic_acid = macros['PANTOTHENIC ACID']
+        self.vitamin_k = macros['VITAMIN K']
+        self.biotin = macros['BIOTIN']
 
-    def load_minerals(self, result_set):
-        pass
+        # Minerals
+        self.zinc = macros['ZINC']
+        self.selenium = macros['SELENIUM']
+        self.calcium = macros['CALCIUM']
+        self.potassium = macros['POTASSIUM']
+        self.iron = macros['IRON']
+        self.manganese = macros['MANGANESE']
+        self.magnesium = macros['MAGNESIUM']
+        self.copper = macros['COPPER']
 
-    def load_aminos(self, result_set):
-        pass
-
-    def load_steroids(self, result_set):
-        pass
-
-    def load_misc(self, result_set):
-        pass
 
     def change_serving(self, factor):
         self.calories = self.calories * factor
