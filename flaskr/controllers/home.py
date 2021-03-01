@@ -64,13 +64,6 @@ def serving(food_id):
     if request.method == 'POST':
         measure = request.form['ing_measure']
 
-
-        #session['checked'] = []
-        #for checkbox in 'macros', 'vitamins', 'minerals', 'amino_acids', 'steroids', 'misc':
-        #    value = request.form.get(checkbox)
-        #    if value:
-        #        session['checked'].append(value)
-
         if 'ser_q' in request.path:
             return redirect(url_for('home.nut_q', food_id=food_id, measure=measure))
         elif 'ser_c1' in request.path:
@@ -83,11 +76,11 @@ def serving(food_id):
 
 def nutrient_query(nutrient_codes, food_id, measure):
     res = db_session.query(FoodName.FoodID, FoodName.FoodDescription, MeasureName.MeasureDescription,
-                                 NutrientName.NutrientName,
-                                 func.round((ConversionFactor.ConversionFactorValue * NutrientAmount.NutrientValue),
-                                            2).label(
-                                     'NutrientValCalc'),
-                                 NutrientName.NutrientUnit) \
+                           NutrientName.NutrientName,
+                           func.round((ConversionFactor.ConversionFactorValue * NutrientAmount.NutrientValue),
+                                      2).label(
+                               'NutrientValCalc'),
+                           NutrientName.NutrientUnit) \
         .outerjoin(ConversionFactor, FoodName.FoodID == ConversionFactor.FoodID) \
         .outerjoin(MeasureName, ConversionFactor.MeasureID == MeasureName.MeasureID) \
         .outerjoin(NutrientAmount, FoodName.FoodID == NutrientAmount.FoodID) \

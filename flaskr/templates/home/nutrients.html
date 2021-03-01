@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
+<script src="{{url_for('static', filename='js/checkBox.js')}}"></script>
 
 <div class="container">
     <div class="row">
@@ -22,12 +22,12 @@
                     {% endfor %}
                 </ul>
                 <ul id="macros">
-                    <li><b>Calories:</b> : {{ food.calories }}</li>
-                    <li><b>Carbs:</b> : {{ food.carbs }}</li>
-                    <li><b>Fats:</b> : {{ food.fat }}</li>
-                    <li><b>Saturated Fats:</b> : {{ food.sat_fat }}</li>
-                    <li><b>Proteins:</b> : {{ food.proteins }}</li>
-                    <li><b>Fiber:</b> : {{ food.fiber }}</li>
+                    <li><b>Calories:</b>  {{ food.calories }}</li>
+                    <li><b>Carbs:</b>  {{ food.carbs }}</li>
+                    <li><b>Fats:</b>  {{ food.fat }}</li>
+                    <li><b>Saturated Fats:</b>  {{ food.sat_fat }}</li>
+                    <li><b>Proteins:</b>  {{ food.proteins }}</li>
+                    <li><b>Fiber:</b>  {{ food.fiber }}</li>
                 </ul>
                 <ul id="vitamins" style="display:none">
                     <li><b>Alpha Carotene:</b></li>
@@ -57,7 +57,7 @@
                     <li><b>Delta-tocopherol:</b></li>
                     <li><b>Vitamin K:</b></li>
                 </ul>
-                <ul class="minerals" style="display:none">
+                <ul id="minerals" style="display:none">
                     <li><b>Calcium:</b></li>
                     <li><b>Copper:</b></li>
                     <li><b>Iron:</b></li>
@@ -67,7 +67,6 @@
                     <li><b>Selenium:</b></li>
                     <li><b>Zinc:</b></li>
                 </ul>
-
             </div>
         </div>
         <div class="col-6">

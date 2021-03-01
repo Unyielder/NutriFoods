@@ -108,7 +108,6 @@ class Food:
         self.magnesium = macros['MAGNESIUM']
         self.copper = macros['COPPER']
 
-
     def change_serving(self, factor):
         self.calories = self.calories * factor
         self.proteins = self.proteins * factor

@@ -3,9 +3,9 @@ function handleCheck() {
         var checkbox_vitamins = document.getElementById("vitaminsCheck");
         var checkbox_minerals = document.getElementById("mineralsCheck");
 
-        var macros_text = document.getElementsById("macros");
-        var vitamins_text = document.getElementsById("vitamins");
-        var minerals_text = document.getElementsById("minerals");
+        var macros_text = document.getElementById("macros");
+        var vitamins_text = document.getElementById("vitamins");
+        var minerals_text = document.getElementById("minerals");
 
         if(checkbox_macros.checked == true) {
             macros_text.style.display = "block";
