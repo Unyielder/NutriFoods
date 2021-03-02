@@ -84,10 +84,10 @@ class Food:
         self.mannitol = None
         self.monosaccharides_total = None
         self.disaccharides_total = None
-        self.sorbitl = None
+        self.sorbitol = None
         # Steroids
         self.campesterol = None
-        self.stigmaasterol = None
+        self.stigmasterol = None
         self.beta_sitosterol = None
         self.total_plant_sterol = None
         self.cholesterol = None
