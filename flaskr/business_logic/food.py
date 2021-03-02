@@ -51,6 +51,59 @@ class Food:
         self.manganese = None
         self.magnesium = None
         self.copper = None
+        # Amino-acids
+        self.valine = None
+        self.tyrosine = None
+        self.tryptophan = None
+        self.threonine = None
+        self.theobromine = None
+        self.proline = None
+        self.serine = None
+        self.phenylalamine = None
+        self.alanine = None
+        self.aspartic_acid = None
+        self.aspartame = None
+        self.leucine = None
+        self.lysine = None
+        self.isoleucine = None
+        self.hydroxyproline = None
+        self.histidine = None
+        self.glycine = None
+        self.glutamic_acid = None
+        self.methionine = None
+        self.cystine = None
+        self.arginine = None
+        # Surgars
+        self.surgars_total = None
+        self.lactose = None
+        self.glucose = None
+        self.galactose = None
+        self.sucrose = None
+        self.fructose = None
+        self.maltose = None
+        self.mannitol = None
+        self.monosaccharides_total = None
+        self.disaccharides_total = None
+        self.sorbitl = None
+        # Steroids
+        self.campesterol = None
+        self.stigmaasterol = None
+        self.beta_sitosterol = None
+        self.total_plant_sterol = None
+        self.cholesterol = None
+        # Misc
+        self.phosphorus = None
+        self.oxalic_acid = None
+        self.moisture = None
+        self.lycopene = None
+        self.luteine_and_zeaxanthine = None
+        self.choline_total = None
+        self.caffeine = None
+        self.betaine = None
+        self.beta_cryptoxanthin = None
+        self.ash_total = None
+        self.alcohol = None
+
 
     def load_measure(self, result_set):
         self.measure = [res[2] for res in result_set]
