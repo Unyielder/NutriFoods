@@ -160,6 +160,62 @@ class Food:
         self.magnesium = macros['MAGNESIUM']
         self.copper = macros['COPPER']
 
+        # Amino-acids
+        self.valine = macros['VALINE']
+        self.tyrosine = macros['TYROSINE']
+        self.tryptophan = macros['TRYPTOPHAN']
+        self.threonine = macros['THREONINE']
+        self.theobromine = macros['THEOBROMINE']
+        self.proline = macros['PROLINE']
+        self.serine = macros['SERINE']
+        self.phenylalamine = macros['PHENYLALANINE']
+        self.alanine = macros['ALANINE']
+        self.aspartic_acid = macros['ASPARTIC ACID']
+        self.aspartame = macros['ASPARTAME']
+        self.leucine = macros['LEUCINE']
+        self.lysine = macros['LYSINE']
+        self.isoleucine = macros['ISOLEUCINE']
+        self.hydroxyproline = macros['HYDROXYPROLINE']
+        self.histidine = macros['HISTIDINE']
+        self.glycine = macros['GLYCINE']
+        self.glutamic_acid = macros['GLUTAMIC ACID']
+        self.methionine = macros['METHIONINE']
+        self.cystine = macros['CYSTINE']
+        self.arginine = macros['ARGININE']
+
+        # Surgars
+        self.surgars_total = macros['SUGARS, TOTAL']
+        self.lactose = macros['LACTOSE']
+        self.glucose = macros['GLUCOSE']
+        self.galactose = macros['GALACTOSE']
+        self.sucrose = macros['SUCROSE']
+        self.fructose = macros['FRUCTOSE']
+        self.maltose = macros['MALTOSE']
+        self.mannitol = macros['MANNITOL']
+        self.monosaccharides_total = macros['TOTAL MONOSACCARIDES']
+        self.disaccharides_total = macros['TOTAL DISACCHARIDES']
+        self.sorbitol = macros['SORBITOL']
+
+        # Steroids
+        self.campesterol = macros['CAMPESTEROL']
+        self.stigmasterol = macros['STIGMASTEROL']
+        self.beta_sitosterol = macros['BETA-SITOSTEROL']
+        self.total_plant_sterol = macros['TOTAL PLANT STEROL']
+        self.cholesterol = macros['CHOLESTEROL']
+        
+        # Misc
+        self.phosphorus = macros['PHOSPHORUS']
+        self.oxalic_acid = macros['OXALIC ACID']
+        self.moisture = macros['MOISTURE']
+        self.lycopene = macros['LYCOPENE']
+        self.luteine_and_zeaxanthine = macros['LUTEIN AND ZEAXANTHIN']
+        self.choline_total = macros['CHOLINE, TOTAL']
+        self.caffeine = macros['CAFFEINE']
+        self.betaine = macros['BETAINE']
+        self.beta_cryptoxanthin = macros['BETA CRYPTOXANTHIN']
+        self.ash_total = macros['ASH, TOTAL']
+        self.alcohol = macros['ALCOHOL']
+
     def change_serving(self, factor):
         self.calories = self.calories * factor
         self.proteins = self.proteins * factor
