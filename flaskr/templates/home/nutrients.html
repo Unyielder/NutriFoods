@@ -15,114 +15,434 @@
     <div class="row">
         <div class="col-6">
             <h3>{{ food_name }} ({{ measure }})</h3>
-            <div class="border border-primary rounded">
+            <div>
                 <h3></h3>
                 <ul>{% for row in ing_nutrients %}
                     <li><b>{{ row[3] }}:</b> {{ row[4] }}{{ row[5] }}</li>
                     {% endfor %}
                 </ul>
-                <ul id="macros">
-                    <li><b>Calories:</b>  {{ food.calories }}</li>
-                    <li><b>Carbs:</b>  {{ food.carbs }}</li>
-                    <li><b>Fats:</b>  {{ food.fat }}</li>
-                    <li><b>Saturated Fats:</b>  {{ food.sat_fat }}</li>
-                    <li><b>Proteins:</b>  {{ food.proteins }}</li>
-                    <li><b>Fiber:</b>  {{ food.fiber }}</li>
-                </ul>
-                <ul id="vitamins" style="display:none">
-                    <li><b>Alpha Carotene:</b></li>
-                    <li><b>Beta Carotene:</b></li>
-                    <li><b>Retinol:</b></li>
-                    <li><b>Retinol Activity Equivalents:</b></li>
-                    <li><b>Vitamin B6:</b></li>
-                    <li><b>Vitamin B12:</b></li>
-                    <li><b>Vitamin B12 Added:</b></li>
-                    <li><b>Riboflavin:</b></li>
-                    <li><b>Folate:</b></li>
-                    <li><b>Folacin:</b></li>
-                    <li><b>Folic Acid:</b></li>
-                    <li><b>Total Niacin:</b></li>
-                    <li><b>Niacin preformed:</b></li>
-                    <li><b>Biotin:</b></li>
-                    <li><b>Thiamine:</b></li>
-                    <li><b>Pantothenic Acid:</b></li>
-                    <li><b>Vitamin C:</b></li>
-                    <li><b>Vitamin D:</b></li>
-                    <li><b>Vitamin D2:</b></li>
-                    <li><b>Vitamin D2, D3:</b></li>
-                    <li><b>Alpha-tocopherol:</b></li>
-                    <li><b>Alpha-tocopherol added:</b></li>
-                    <li><b>Beta-tocopherol:</b></li>
-                    <li><b>Gamma-tocopherol:</b></li>
-                    <li><b>Delta-tocopherol:</b></li>
-                    <li><b>Vitamin K:</b></li>
-                </ul>
-                <ul id="minerals" style="display:none">
-                    <li><b>Calcium:</b></li>
-                    <li><b>Copper:</b></li>
-                    <li><b>Iron:</b></li>
-                    <li><b>Magnesium:</b></li>
-                    <li><b>Manganese:</b></li>
-                    <li><b>Potassium:</b></li>
-                    <li><b>Selenium:</b></li>
-                    <li><b>Zinc:</b></li>
-                </ul>
-                <ul id="aminos" style="display:none">
-                    <li><b>Valine:</b></li>
-                    <li><b>Tyrosine:</b></li>
-                    <li><b>Tryptophan:</b></li>
-                    <li><b>Threonine: </b></li>
-                    <li><b>Theobromine:</b></li>
-                    <li><b>Proline:</b></li>
-                    <li><b>Serine:</b></li>
-                    <li><b>Phenylalamine:</b></li>
-                    <li><b>Alanine:</b></li>
-                    <li><b>Aspartic_acid:</b></li>
-                    <li><b>Aspartame:</b></li>
-                    <li><b>Leucine:</b></li>
-                    <li><b>Lysine:</b></li>
-                    <li><b>Isoleucine:</b></li>
-                    <li><b>Hydroxyproline:</b></li>
-                    <li><b>Histidine:</b></li>
-                    <li><b>Glycine:</b></li>
-                    <li><b>Glutamic acid:</b></li>
-                    <li><b>Methionine:</b></li>
-                    <li><b>Cystine:</b></li>
-                    <li><b>Arginine:</b></li>
-                </ul>
-                <ul id="surgars" style="display:none">
-                    <li><b>Surgars Total:</b></li>
-                    <li><b>Lactose:</b></li>
-                    <li><b>Glucose:</b></li>
-                    <li><b>Galactose:</b></li>
-                    <li><b>Sucrose:</b></li>
-                    <li><b>Fructose:</b></li>
-                    <li><b>Maltose:</b></li>
-                    <li><b>Mannitol</b></li>
-                    <li><b>Monosaccharides Total:</b></li>
-                    <li><b>Disaccharides Total:</b></li>
-                    <li><b>Sorbitol</b></li>
-                </ul>
-                <ul id="steroids" style="display:none">
-                    <li><b>Campesterol:</b></li>
-                    <li><b>Stigmasterol:</b></li>
-                    <li><b>Beta-sitosterol:</b></li>
-                    <li><b>Total Plant Sterol:</b></li>
-                    <li><b>Cholesterol:</b></li>
-                </ul>
-                <ul id="misc" style="display:none">
-                    <li><b>Caffeine</b></li>
-                    <li><b>Phosphorus:</b></li>
-                    <li><b>Oxalic acid</b></li>
-                    <li><b>Moisture:</b></li>
-                    <li><b>Lycopene:</b></li>
-                    <li><b>Luteine and Zeaxanthine:</b></li>
-                    <li><b>Choline Total:</b></li>
-                    <li><b>Betaine:</b></li>
-                    <li><b>Beta-cryptoxanthin:</b></li>
-                    <li><b>Ash Total:</b></li>
-                    <li><b>Alcohol:</b></li>
-                </ul>
+                    <table id="macros" class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Macros</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Calories</td>
+                                <td>{{ food.calories[0]  }}{{ food.calories[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Carbs</td>
+                                <td>{{ food.carbs[0] }}{{  food.carbs[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fats</td>
+                                <td>{{ food.fat[0] }}{{  food.fat[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Carbs</td>
+                                <td>{{ food.sat_fat[0] }}{{  food.sat_fat[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Proteins</td>
+                                <td>{{ food.proteins[0] }}{{  food.proteins[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fiber</td>
+                                <td>{{ food.fiber[0] }}{{  food.fiber[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="vitamins" style="display:none" class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Vitamins</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alpha Carotene</td>
+                                <td>{{ food.alpha_carotene[0]  }}{{ food.alpha_carotene[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Beta Carotene</td>
+                                <td>{{ food.beta_carotene[0] }}{{  food.beta_carotene[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Retinol</td>
+                                <td>{{ food.retinol[0] }}{{  food.retinol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Retinol Activity Equivalents</td>
+                                <td>{{ food.retinol_activity_equi[0] }}{{  food.retinol_activity_equi[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin B6</td>
+                                <td>{{ food.vitamin_b6[0] }}{{  food.vitamin_b6[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin B12</td>
+                                <td>{{ food.vitamin_b12[0] }}{{  food.vitamin_b12[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin B12 added</td>
+                                <td>{{ food.vitamin_b12_added[0] }}{{  food.vitamin_b12_added[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Riboflavin</td>
+                                <td>{{ food.riboflavin[0] }}{{  food.riboflavin[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Folate</td>
+                                <td>{{ food.folate[0] }}{{  food.folate[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Folacin</td>
+                                <td>{{ food.folacin[0] }}{{  food.folacin[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Folic Acid</td>
+                                <td>{{ food.folic_acid[0] }}{{  food.folic_acid[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Niacin</td>
+                                <td>{{ food.total_niacin[0] }}{{  food.total_niacin[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Niacin preformed</td>
+                                <td>{{ food.niacin_preformed[0] }}{{  food.niacin_preformed[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Biotin</td>
+                                <td>{{ food.biotin[0] }}{{  food.biotin[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Thiamine</td>
+                                <td>{{ food.thiamine[0] }}{{  food.thiamine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Pantothenic Acid</td>
+                                <td>{{ food.pantothenic_acid[0] }}{{  food.pantothenic_acid[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin C</td>
+                                <td>{{ food.vitamin_c[0] }}{{  food.vitamin_c[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin D</td>
+                                <td>{{ food.vitamin_d[0] }}{{  food.vitamin_d[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin D2</td>
+                                <td>{{ food.vitamin_d2[0] }}{{  food.vitamin_d2[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin D, D2, D3</td>
+                                <td>{{ food.vitamin_d2_d3[0] }}{{  food.vitamin_d2_d3[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Alpha-tocopherol</td>
+                                <td>{{ food.alpha_tocopherol[0] }}{{  food.alpha_tocopherol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Alpha-tocopherol, added</td>
+                                <td>{{ food.alpha_tocopherol_added[0] }}{{  food.alpha_tocopherol_added[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Beta-tocopherol</td>
+                                <td>{{ food.beta_tocopherol[0] }}{{  food.beta_tocopherol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Gamma-tocopherol</td>
+                                <td>{{ food.gamma_tocopherol[0] }}{{  food.gamma_tocopherol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Delta-tocopherol</td>
+                                <td>{{ food.delta_tocopherol[0] }}{{  food.delta_tocopherol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Vitamin_k</td>
+                                <td>{{ food.vitamin_k[0] }}{{  food.vitamin_k[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="minerals" class="table table-hover" style="display:none">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Minerals</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Calcium</td>
+                                <td>{{ food.calcium[0]  }}{{ food.calcium[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Copper</td>
+                                <td>{{ food.copper[0] }}{{  food.copper[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Iron</td>
+                                <td>{{ food.iron[0] }}{{  food.iron[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Magnesium</td>
+                                <td>{{ food.magnesium[0] }}{{  food.magnesium[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Manganese</td>
+                                <td>{{ food.manganese[0] }}{{  food.manganese[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Potassium</td>
+                                <td>{{ food.potassium[0] }}{{  food.potassium[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Selenium</td>
+                                <td>{{ food.selenium[0] }}{{  food.selenium[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Zinc</td>
+                                <td>{{ food.zinc[0] }}{{  food.zinc[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="aminos" class="table table-hover" style="display:none">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Amino-Acids</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Valine</td>
+                                <td>{{ food.valine[0]  }}{{ food.valine[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tyrosine</td>
+                                <td>{{ food.tyrosine[0] }}{{  food.tyrosine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tryptophan</td>
+                                <td>{{ food.tryptophan[0] }}{{  food.tryptophan[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Threonine</td>
+                                <td>{{ food.threonine[0] }}{{  food.threonine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Theobromine</td>
+                                <td>{{ food.theobromine[0] }}{{  food.theobromine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Proline</td>
+                                <td>{{ food.proline[0] }}{{  food.proline[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Serine</td>
+                                <td>{{ food.serine[0] }}{{  food.serine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Phenylalamine</td>
+                                <td>{{ food.phenylalamine[0] }}{{  food.phenylalamine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Alanine</td>
+                                <td>{{ food.alanine[0]  }}{{ food.alanine[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Aspartic Acid</td>
+                                <td>{{ food.aspartic_acid[0] }}{{  food.aspartic_acid[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Aspartame</td>
+                                <td>{{ food.aspartame[0] }}{{  food.aspartame[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Leucine</td>
+                                <td>{{ food.leucine[0] }}{{  food.leucine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Lysine</td>
+                                <td>{{ food.lysine[0] }}{{  food.lysine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Isoleucine</td>
+                                <td>{{ food.isoleucine[0] }}{{  food.isoleucine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Hydroxyproline</td>
+                                <td>{{ food.hydroxyproline[0] }}{{  food.hydroxyproline[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Histidine</td>
+                                <td>{{ food.histidine[0] }}{{  food.histidine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Glycine</td>
+                                <td>{{ food.glycine[0] }}{{  food.glycine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Glutamic Acid</td>
+                                <td>{{ food.glutamic_acid[0] }}{{  food.glutamic_acid[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Methionine</td>
+                                <td>{{ food.methionine[0] }}{{  food.methionine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cystine</td>
+                                <td>{{ food.cystine[0] }}{{  food.cystine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Arginine</td>
+                                <td>{{ food.arginine[0] }}{{  food.arginine[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="surgars" class="table table-hover" style="display:none">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Surgars</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Surgars Total</td>
+                                <td>{{ food.surgars_total[0]  }}{{ food.surgars_total[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Lactose</td>
+                                <td>{{ food.lactose[0] }}{{  food.lactose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Glucose</td>
+                                <td>{{ food.glucose[0] }}{{  food.glucose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Galactose</td>
+                                <td>{{ food.galactose[0] }}{{  food.galactose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Sucrose</td>
+                                <td>{{ food.sucrose[0] }}{{  food.sucrose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fructose</td>
+                                <td>{{ food.fructose[0] }}{{  food.fructose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Maltose</td>
+                                <td>{{ food.maltose[0] }}{{  food.maltose[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Mannitol</td>
+                                <td>{{ food.mannitol[0] }}{{  food.mannitol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Monosaccharides Total</td>
+                                <td>{{ food.monosaccharides_total[0] }}{{  food.monosaccharides_total[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Disaccharides Total</td>
+                                <td>{{ food.disaccharides_total[0] }}{{  food.disaccharides_total[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Sorbitol</td>
+                                <td>{{ food.sorbitol[0] }}{{  food.sorbitol[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="steroids" class="table table-hover" style="display:none">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Steroids</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Campesterol</td>
+                                <td>{{ food.campesterol[0]  }}{{ food.campesterol[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Stigmasterol</td>
+                                <td>{{ food.stigmasterol[0] }}{{  food.stigmasterol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Beta-sitosterol</td>
+                                <td>{{ food.beta_sitosterol[0] }}{{  food.beta_sitosterol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Plant Sterol</td>
+                                <td>{{ food.total_plant_sterol[0] }}{{  food.total_plant_sterol[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cholesterol</td>
+                                <td>{{ food.cholesterol[0] }}{{  food.cholesterol[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="misc" class="table table-hover" style="display:none">
+                        <thead class="table-dark">
+                            <tr>
+                                <td><b>Misc</b></td>
+                                <td><b>Amount</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Caffeine</td>
+                                <td>{{ food.caffeine[0]  }}{{ food.caffeine[1] }}</td>
+                            </tr>
+                            <tr>
+                                <td>Phosphorus</td>
+                                <td>{{ food.phosphorus[0] }}{{  food.phosphorus[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Oxalic Acid</td>
+                                <td>{{ food.oxalic_acid[0] }}{{  food.oxalic_acid[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Moisture</td>
+                                <td>{{ food.moisture[0] }}{{  food.moisture[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Lycopene</td>
+                                <td>{{ food.lycopene[0] }}{{  food.lycopene[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Luteine and Zeaxanthine</td>
+                                <td>{{ food.luteine_and_zeaxanthine[0] }}{{  food.luteine_and_zeaxanthine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Choline Total</td>
+                                <td>{{ food.choline_total[0] }}{{  food.choline_total[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Betaine</td>
+                                <td>{{ food.betaine[0] }}{{  food.betaine[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Beta-cryptoxanthin</td>
+                                <td>{{ food.beta_cryptoxanthin[0] }}{{  food.beta_cryptoxanthin[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Ash Total</td>
+                                <td>{{ food.ash_total[0] }}{{  food.ash_total[1]  }}</td>
+                            </tr>
+                            <tr>
+                                <td>Alcohol</td>
+                                <td>{{ food.alcohol[0] }}{{  food.alcohol[1]  }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
         <div class="col-6">

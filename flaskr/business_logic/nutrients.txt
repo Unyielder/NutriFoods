@@ -179,3 +179,44 @@ FATTY ACIDS, MONOUNSATURATED, 15:1, PENTADECENOIC
 FATTY ACIDS, MONOUNSATURATED, 14:1, TETRADECENOIC
 FATTY ACIDS, MONOUNSATURATED, 12:1, LAUROLEIC
 FATTY ACIDS, MONOUNSATURATED,  24:1undifferentiated, TETRACOSENOIC
+
+
+
+
+
+<ul>
+                    <li><b>Calories:&nbsp;</b>{{ food.calories[0]  }}{{ food.calories[1] }}</li>
+                    <li><b>Carbs:</b>  {{ food.carbs[0] }}</li>
+                    <li><b>Fats:</b>  {{ food.fat[0] }}</li>
+                    <li><b>Saturated Fats:</b>  {{ food.sat_fat[0] }}</li>
+                    <li><b>Proteins:</b>  {{ food.proteins[0] }}</li>
+                    <li><b>Fiber:</b>  {{ food.fiber[0] }}</li>
+                </ul>
+                <ul style="display:none">
+                    <li><b>Alpha Carotene:</b></li>
+                    <li><b>Beta Carotene:</b></li>
+                    <li><b>Retinol:</b></li>
+                    <li><b>Retinol Activity Equivalents:</b></li>
+                    <li><b>Vitamin B6:</b></li>
+                    <li><b>Vitamin B12:</b></li>
+                    <li><b>Vitamin B12 Added:</b></li>
+                    <li><b>Riboflavin:</b></li>
+                    <li><b>Folate:</b></li>
+                    <li><b>Folacin:</b></li>
+                    <li><b>Folic Acid:</b></li>
+                    <li><b>Total Niacin:</b></li>
+                    <li><b>Niacin preformed:</b></li>
+                    <li><b>Biotin:</b></li>
+                    <li><b>Thiamine:</b></li>
+                    <li><b>Pantothenic Acid:</b></li>
+                    <li><b>Vitamin C:</b></li>
+                    <li><b>Vitamin D:</b></li>
+                    <li><b>Vitamin D2:</b></li>
+                    <li><b>Vitamin D2, D3:</b></li>
+                    <li><b>Alpha-tocopherol:</b></li>
+                    <li><b>Alpha-tocopherol added:</b></li>
+                    <li><b>Beta-tocopherol:</b></li>
+                    <li><b>Gamma-tocopherol:</b></li>
+                    <li><b>Delta-tocopherol:</b></li>
+                    <li><b>Vitamin K:</b></li>
+                </ul>

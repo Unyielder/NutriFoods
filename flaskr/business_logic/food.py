@@ -104,7 +104,6 @@ class Food:
         self.ash_total = None
         self.alcohol = None
 
-
     def load_measure(self, result_set):
         self.measure = [res[2] for res in result_set]
 

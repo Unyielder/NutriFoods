@@ -2,8 +2,7 @@
 
 ul li {
     list-style:none;
-    padding:0;
-    margin:0;
+
     display: flex;
 }
 
@@ -76,4 +75,8 @@ ul li {
 
 form {
     display: block;
+}
+
+.table {
+    width: 50%;
 }
