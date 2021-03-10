@@ -124,7 +124,7 @@ class Food:
 
         # Vitamins
         self.alpha_carotene = macros['ALPHA CAROTENE']
-        self.beta_carotene= macros['BETA CAROTENE']
+        self.beta_carotene = macros['BETA CAROTENE']
         self.retinol = macros['RETINOL']
         self.vitamin_d = macros['VITAMIN D (INTERNATIONAL UNITS)']
         self.vitamin_d2 = macros['VITAMIN D2, ERGOCALCIFEROL']
@@ -202,7 +202,7 @@ class Food:
         self.beta_sitosterol = macros['BETA-SITOSTEROL']
         self.total_plant_sterol = macros['TOTAL PLANT STEROL']
         self.cholesterol = macros['CHOLESTEROL']
-        
+
         # Misc
         self.phosphorus = macros['PHOSPHORUS']
         self.oxalic_acid = macros['OXALIC ACID']
@@ -217,9 +217,7 @@ class Food:
         self.alcohol = macros['ALCOHOL']
 
     def change_serving(self, factor):
-        self.calories = self.calories * factor
-        self.proteins = self.proteins * factor
-        self.fat = self.fat * factor
-        self.sat_fat = self.sat_fat * factor
-        self.fiber = self.fiber * factor
-        self.carbs = self.carbs * factor
+        for attr, value in self.__dict__.items():
+            if type(value) == list:
+                value = value * factor
+                self.__dict__[attr] = value
